@@ -43,14 +43,18 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+          <div className="flex justify-center items-center gap-2 mb-2 animate-fade-in-up opacity-80">
+            <span className="text-gray-400 tracking-widest text-xs uppercase">Powered by</span>
+            <DGXLogo className="h-4 text-white" />
+          </div>
           <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-4 animate-pulse">
-            The Awakening
+            Indie AAA • RPG • Global
           </h2>
           <h1 className="text-5xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-yellow-700 mb-8 drop-shadow-2xl">
-            MANDALA<br />SHADOWED TRUTH
+            MANDALA<br />WAR OF CROWNS
           </h1>
           <p className="text-gray-300 text-lg md:text-2xl max-w-2xl mx-auto mb-12 font-sans leading-relaxed">
-            Dive into the abyss of ancient mythology. Uncover the secrets hidden within the shadows of the eternal mandala.
+            Blends the richness of Nusantara-inspired mythology with modern, globally appealing design.
           </p>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
             <Link to="/login" className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500">
@@ -70,33 +74,33 @@ export default function LandingPage() {
       <div id="about" className="py-24 bg-zinc-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 mb-4">THE LEGEND RETURNS</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 mb-4">DRAGONIX INTERACTIVE</h2>
             <div className="w-24 h-1 bg-yellow-600 mx-auto"></div>
             <p className="mt-4 text-gray-400 max-w-3xl mx-auto text-lg">
-              Experience the next generation of dark mythology action RPG. "Mandala Shadowed Truth" takes you on a journey through the forgotten realms of the East, where gods and demons clash in an eternal struggle for dominance.
+              We are an independent studio crafting modern, globally appealing action RPGs. Founded by the core creative leadership behind a previously acquired IP, we build original worlds with strong global potential.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-black border border-yellow-900/30 p-8 rounded-lg hover:border-yellow-500/50 transition-colors">
               <SparklesIcon className="w-12 h-12 text-yellow-500 mb-6" />
-              <h3 className="text-xl font-bold text-white mb-3">Ancient Mythology</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Global Indie AAA</h3>
               <p className="text-gray-500">
-                Deep exploration of traditional eastern mythology, presenting an authentic fantasy world to global players.
+                Designed to resonate with audiences in North America, Europe, and beyond with high production values.
               </p>
             </div>
             <div className="bg-black border border-yellow-900/30 p-8 rounded-lg hover:border-yellow-500/50 transition-colors">
               <FireIcon className="w-12 h-12 text-yellow-500 mb-6" />
-              <h3 className="text-xl font-bold text-white mb-3">Epic Combat</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Action Combat</h3>
               <p className="text-gray-500">
-                Innovative combat system combined with traditional martial arts brings unprecedented action experience.
+                Skill-based action combat with meaningful progression and tight mechanics.
               </p>
             </div>
             <div className="bg-black border border-yellow-900/30 p-8 rounded-lg hover:border-yellow-500/50 transition-colors">
               <ShieldCheckIcon className="w-12 h-12 text-yellow-500 mb-6" />
-              <h3 className="text-xl font-bold text-white mb-3">AAA Quality</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Myth-Driven</h3>
               <p className="text-gray-500">
-                Meticulously crafted with stunning visuals, immersive audio, and a gripping narrative that defines the genre.
+                Rich worldbuilding rooted in Nusantara-inspired mythology mixed with modern fantasy elements.
               </p>
             </div>
           </div>
@@ -129,7 +133,7 @@ export default function LandingPage() {
                <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-2">
                  <span className="text-gray-500 text-xs uppercase tracking-wider">Created by</span>
                  <div className="flex flex-col">
-                    <DGXLogo className="h-6" />
+                    <DGXLogo className="h-6 text-gray-500" />
                     <span className="text-[10px] text-gray-600 tracking-[0.2em] uppercase mt-1">Dragonix Interactive</span>
                  </div>
                </div>
