@@ -21,7 +21,7 @@ export default function Login() {
 
   useEffect(() => {
     if (!authLoading && user) {
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [user, authLoading, navigate]);
 

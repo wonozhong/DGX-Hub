@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion'; // Assuming framer-motion is available, if not I'll remove it or install it. I'll check first.
+import { motion } from 'framer-motion';
 import { 
   SparklesIcon, 
   FireIcon, 
   ShieldCheckIcon, 
   ArrowRightIcon 
 } from '@heroicons/react/24/outline';
+import { useAuthStore } from '../stores/authStore';
 
 export default function LandingPage() {
+  const { user } = useAuthStore();
   return (
     <div className="min-h-screen bg-black text-white font-serif overflow-x-hidden">
       {/* Navigation */}
@@ -25,8 +27,8 @@ export default function LandingPage() {
                 <a href="#about" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
                 <a href="#features" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
                 <a href="#gallery" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Gallery</a>
-                <Link to="/login" className="bg-yellow-600 text-black hover:bg-yellow-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105">
-                  Enter Realm
+                <Link to={user ? "/dashboard" : "/login"} className="bg-yellow-600 text-black hover:bg-yellow-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105">
+                  {user ? "Dashboard" : "Enter Realm"}
                 </Link>
               </div>
             </div>
@@ -70,9 +72,9 @@ export default function LandingPage() {
             Blends the richness of Nusantara-inspired mythology with modern, globally appealing design.
           </p>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <Link to="/login" className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500 z-50 cursor-pointer">
+            <Link to={user ? "/dashboard" : "/login"} className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500 z-50 cursor-pointer">
               <span className="relative z-10 flex items-center gap-2">
-                ENTER REALM <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {user ? "GO TO DASHBOARD" : "ENTER REALM"} <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </Link>
