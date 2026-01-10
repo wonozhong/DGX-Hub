@@ -70,13 +70,13 @@ export default function LandingPage() {
             Blends the richness of Nusantara-inspired mythology with modern, globally appealing design.
           </p>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <Link to="/login" className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500">
+            <Link to="/login" className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500 z-50 cursor-pointer">
               <span className="relative z-10 flex items-center gap-2">
-                PLAY NOW <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                ENTER REALM <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </Link>
-            <button className="px-8 py-4 border border-yellow-600 text-yellow-500 font-bold text-lg rounded-sm hover:bg-yellow-900/20 transition-all">
+            <button className="px-8 py-4 border border-yellow-600 text-yellow-500 font-bold text-lg rounded-sm hover:bg-yellow-900/20 transition-all z-50">
               WATCH TRAILER
             </button>
           </div>
