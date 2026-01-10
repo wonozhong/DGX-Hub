@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'; // Assuming framer-motion is available, if not I'll remove it or install it. I'll check first.
-import { DGXLogo } from '../components/DGXLogo';
 import { 
   SparklesIcon, 
   FireIcon, 
@@ -45,7 +44,7 @@ export default function LandingPage() {
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="flex justify-center items-center gap-2 mb-2 animate-fade-in-up opacity-80">
             <span className="text-gray-400 tracking-widest text-xs uppercase">Powered by</span>
-            <DGXLogo className="h-4 text-white" />
+            <img src="https://dragonixinteractive.com/wp-content/uploads/2025/01/DGX-Logo-White-Transparent-300x78.png" alt="DGX Logo" className="h-5" />
           </div>
           <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-4 animate-pulse">
             Indie AAA • RPG • Global
