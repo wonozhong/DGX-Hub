@@ -60,17 +60,12 @@ export default function LandingPage() {
           <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-4 animate-pulse">
             Indie AAA • RPG • Global
           </h2>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-yellow-700 mb-8 drop-shadow-2xl font-serif"
-          >
+          <h1 className="text-5xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-yellow-700 mb-8 drop-shadow-2xl font-serif">
             MANDALA<br />
             <span className="text-3xl md:text-5xl tracking-widest text-yellow-100 block mt-2 font-light border-t border-yellow-900/50 pt-4 max-w-4xl mx-auto">
               SHADOWED TRUTH
             </span>
-          </motion.h1>
+          </h1>
           <p className="text-gray-300 text-lg md:text-2xl max-w-2xl mx-auto mb-12 font-sans leading-relaxed">
             Blends the richness of Nusantara-inspired mythology with modern, globally appealing design.
           </p>
