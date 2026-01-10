@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'; // Assuming framer-motion is available, if not I'll remove it or install it. I'll check first.
+import { DGXLogo } from '../components/DGXLogo';
 import { 
   SparklesIcon, 
   FireIcon, 
