@@ -133,7 +133,7 @@ export default function LandingPage() {
                <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-2">
                  <span className="text-gray-500 text-xs uppercase tracking-wider">Created by</span>
                   <div className="flex flex-col">
-                     <DGXLogo className="h-6 text-white" />
+                     <img src="/images/dgx-logo-white.png" alt="DGX Logo" className="h-6 w-auto" />
                      <span className="text-[10px] text-gray-400 tracking-[0.2em] uppercase mt-1">Dragonix Interactive</span>
                   </div>
                </div>
