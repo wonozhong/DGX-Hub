@@ -14,6 +14,7 @@ import {
 import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { cn } from '../lib/utils';
+import { DGXLogo } from '../components/DGXLogo';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -82,7 +83,7 @@ export default function MainLayout() {
                   {/* Sidebar component for mobile */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
-                      <span className="text-2xl font-bold text-blue-600">DGX HUB</span>
+                      <DGXLogo className="h-8 text-black" />
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -148,7 +149,7 @@ export default function MainLayout() {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-               <span className="text-2xl font-bold text-blue-600">DGX HUB</span>
+               <DGXLogo className="h-8 text-black" />
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
