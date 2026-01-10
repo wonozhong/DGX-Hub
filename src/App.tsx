@@ -36,6 +36,7 @@ function App() {
     <Router>
       <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
       <Analytics />
+      <SpeedInsights />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
