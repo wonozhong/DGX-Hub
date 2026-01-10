@@ -46,7 +46,7 @@ export default function LandingPage() {
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="flex justify-center items-center gap-2 mb-2 animate-fade-in-up opacity-80">
             <span className="text-gray-400 tracking-widest text-xs uppercase">Powered by</span>
-            <img src="/images/dgx-logo-white.png" alt="DGX Logo" className="h-5" />
+            <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-5" />
           </div>
 
           <div className="relative mb-8 flex justify-center">

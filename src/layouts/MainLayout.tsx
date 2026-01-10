@@ -82,7 +82,7 @@ export default function MainLayout() {
                   {/* Sidebar component for mobile */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
-                      <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-8 filter invert" />
+                      <img src="/images/dgx-logo-black.svg" alt="DGX Logo" className="h-8" />
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
