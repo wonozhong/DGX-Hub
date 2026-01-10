@@ -46,7 +46,7 @@ export default function LandingPage() {
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="flex justify-center items-center gap-2 mb-2 animate-fade-in-up opacity-80">
             <span className="text-gray-400 tracking-widest text-xs uppercase">Powered by</span>
-            <img src="https://dragonixinteractive.com/wp-content/uploads/2025/01/DGX-Logo-White-Transparent-300x78.png" alt="DGX Logo" className="h-5" />
+            <img src="/images/dgx-logo-white.png" alt="DGX Logo" className="h-5" />
           </div>
 
           <div className="relative mb-8 flex justify-center">
@@ -148,7 +148,7 @@ export default function LandingPage() {
                <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-2">
                  <span className="text-gray-500 text-xs uppercase tracking-wider">Created by</span>
                   <div className="flex flex-col">
-                     <img src="/images/dgx-logo-white.png" alt="DGX Logo" className="h-6 w-auto" />
+                     <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-6 w-auto" />
                      <span className="text-[10px] text-gray-400 tracking-[0.2em] uppercase mt-1">Dragonix Interactive</span>
                   </div>
                </div>

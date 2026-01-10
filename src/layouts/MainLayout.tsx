@@ -82,7 +82,7 @@ export default function MainLayout() {
                   {/* Sidebar component for mobile */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
-                      <img src="https://dragonixinteractive.com/wp-content/uploads/2025/01/DGX-Logo-White-Transparent-300x78.png" alt="DGX Logo" className="h-8 filter invert" />
+                      <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-8 filter invert" />
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -148,7 +148,7 @@ export default function MainLayout() {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-               <img src="https://dragonixinteractive.com/wp-content/uploads/2025/01/DGX-Logo-White-Transparent-300x78.png" alt="DGX Logo" className="h-8 filter invert" />
+               <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-8 filter invert" />
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -205,9 +205,13 @@ export default function MainLayout() {
                          to={`/profile/${user?.id}`}
                          className="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer transition-colors"
                     >
-                         <div className="h-8 w-8 rounded-full bg-gray-50 flex items-center justify-center text-blue-600 font-bold border border-gray-200">
-                            {user?.name?.charAt(0) || 'U'}
-                        </div>
+                        {user?.avatar_url ? (
+                            <img className="h-8 w-8 rounded-full bg-gray-50 object-cover" src={user.avatar_url} alt="" />
+                        ) : (
+                            <div className="h-8 w-8 rounded-full bg-gray-50 flex items-center justify-center text-blue-600 font-bold border border-gray-200">
+                                {user?.name?.charAt(0) || 'U'}
+                            </div>
+                        )}
                         <span className="sr-only">Your profile</span>
                         <span aria-hidden="true">{user?.name}</span>
                     </Link>
