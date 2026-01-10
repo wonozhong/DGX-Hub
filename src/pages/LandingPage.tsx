@@ -127,10 +127,13 @@ export default function LandingPage() {
                
                <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-2">
                  <span className="text-gray-500 text-xs uppercase tracking-wider">Created by</span>
-                 <DGXLogo className="h-6" />
+                 <div className="flex flex-col">
+                    <DGXLogo className="h-6" />
+                    <span className="text-[10px] text-gray-600 tracking-[0.2em] uppercase mt-1">Dragonix Interactive</span>
+                 </div>
                </div>
                
-               <p className="text-gray-600 text-sm mt-4">© 2025 DGX Studios. All rights reserved.</p>
+               <p className="text-gray-600 text-sm mt-4">© 2025 Dragonix Interactive. All rights reserved.</p>
             </div>
             <div className="flex space-x-6">
                <a href="#" className="text-gray-500 hover:text-yellow-500 transition-colors">Privacy Policy</a>
