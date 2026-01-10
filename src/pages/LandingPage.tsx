@@ -121,10 +121,16 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-zinc-950 py-12 border-t border-yellow-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-               <span className="text-2xl font-bold text-yellow-500 tracking-widest uppercase">Mandala</span>
-               <p className="text-gray-600 text-sm mt-1">© 2025 Game Science (Concept). All rights reserved.</p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="mb-4 md:mb-0 flex flex-col items-start">
+               <span className="text-2xl font-bold text-yellow-500 tracking-widest uppercase mb-4">Mandala</span>
+               
+               <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-2">
+                 <span className="text-gray-500 text-xs uppercase tracking-wider">Created by</span>
+                 <DGXLogo className="h-6" />
+               </div>
+               
+               <p className="text-gray-600 text-sm mt-4">© 2025 DGX Studios. All rights reserved.</p>
             </div>
             <div className="flex space-x-6">
                <a href="#" className="text-gray-500 hover:text-yellow-500 transition-colors">Privacy Policy</a>
