@@ -68,8 +68,19 @@ export default function Login() {
       }
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || 'Terjadi kesalahan.');
-      setError(err.message);
+      let errMsg = err.message || 'Terjadi kesalahan saat login.';
+      
+      // Translate common Supabase error messages to Indonesian
+      if (errMsg.includes('Invalid login credentials')) {
+        errMsg = 'Email atau password salah. Silakan coba lagi.';
+      } else if (errMsg.includes('Email not confirmed')) {
+        errMsg = 'Email belum diverifikasi. Silakan cek inbox/spam email Anda.';
+      } else if (errMsg.includes('User not found')) {
+         errMsg = 'Akun tidak ditemukan. Silakan daftar terlebih dahulu.';
+      }
+
+      toast.error(errMsg);
+      setError(errMsg);
     } finally {
       setLoading(false);
     }

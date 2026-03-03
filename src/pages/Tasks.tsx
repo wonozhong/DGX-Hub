@@ -5,9 +5,15 @@ import { supabase } from '../lib/supabase';
 import { useAuthStore } from '../stores/authStore';
 import { Task, User } from '../types';
 import { cn } from '../lib/utils';
+import { Navigate } from 'react-router-dom';
 
 export default function Tasks() {
   const { user } = useAuthStore();
+  
+  if (user?.role === 'user') {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -123,12 +129,12 @@ export default function Tasks() {
   ];
 
   return (
-    <div>
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Task Board</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Task Board</h1>
         <button
           onClick={() => openModal()}
-          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 transition-colors"
         >
           <PlusIcon className="w-5 h-5 mr-2" />
           New Task
@@ -137,10 +143,10 @@ export default function Tasks() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {columns.map((col) => (
-          <div key={col.id} className={`p-4 rounded-lg ${col.color} min-h-[500px]`}>
-            <h2 className="mb-4 text-lg font-semibold text-gray-700 flex justify-between items-center">
+          <div key={col.id} className={`p-4 rounded-lg ${col.color} dark:bg-gray-800 min-h-[500px] transition-colors`}>
+            <h2 className="mb-4 text-lg font-semibold text-gray-700 dark:text-gray-200 flex justify-between items-center">
                 {col.title}
-                <span className="bg-white px-2 py-1 rounded-full text-xs text-gray-500 border border-gray-200">
+                <span className="bg-white dark:bg-gray-700 px-2 py-1 rounded-full text-xs text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-gray-600">
                     {tasks.filter(t => t.status === col.id).length}
                 </span>
             </h2>
@@ -148,26 +154,26 @@ export default function Tasks() {
               {tasks
                 .filter((task) => task.status === col.id)
                 .map((task) => (
-                  <div key={task.id} className="p-4 bg-white rounded-md shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                  <div key={task.id} className="p-4 bg-white dark:bg-gray-700 rounded-md shadow-sm border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all">
                     <div className="flex justify-between items-start">
-                      <h3 className="font-medium text-gray-900">{task.title}</h3>
+                      <h3 className="font-medium text-gray-900 dark:text-white">{task.title}</h3>
                       <div className="flex space-x-1">
-                        <button onClick={() => openModal(task)} className="p-1 text-gray-400 hover:text-blue-600">
+                        <button onClick={() => openModal(task)} className="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                           <PencilIcon className="w-4 h-4" />
                         </button>
-                        <button onClick={() => deleteTask(task.id)} className="p-1 text-gray-400 hover:text-red-600">
+                        <button onClick={() => deleteTask(task.id)} className="p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors">
                           <TrashIcon className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-gray-500 line-clamp-2">{task.description}</p>
+                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-300 line-clamp-2">{task.description}</p>
                     <div className="mt-4 flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                              <span className={cn(
                                 "px-2 py-1 text-xs rounded-full font-medium",
-                                task.priority === 'high' ? "bg-red-100 text-red-700" :
-                                task.priority === 'medium' ? "bg-yellow-100 text-yellow-700" :
-                                "bg-green-100 text-green-700"
+                                task.priority === 'high' ? "bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300" :
+                                task.priority === 'medium' ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300" :
+                                "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300"
                              )}>
                                 {task.priority}
                              </span>
@@ -175,7 +181,7 @@ export default function Tasks() {
                         {col.id !== 'done' && (
                             <button 
                                 onClick={() => updateStatus(task, col.id === 'todo' ? 'in_progress' : 'done')}
-                                className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                                className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
                             >
                                 Move Next &rarr;
                             </button>
@@ -183,7 +189,7 @@ export default function Tasks() {
                          {col.id !== 'todo' && (
                             <button 
                                 onClick={() => updateStatus(task, col.id === 'done' ? 'in_progress' : 'todo')}
-                                className="text-xs text-gray-500 hover:text-gray-700 font-medium"
+                                className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 font-medium transition-colors"
                             >
                                 &larr; Move Back
                             </button>
@@ -207,7 +213,7 @@ export default function Tasks() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -221,25 +227,25 @@ export default function Tasks() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all border border-gray-200 dark:border-gray-700">
+                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                     {editingTask ? 'Edit Task' : 'Create New Task'}
                   </Dialog.Title>
                   <form onSubmit={handleSubmit} className="mt-4 space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Title</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
                       <input
                         type="text"
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
+                        className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">Description</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                       <textarea
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
+                        className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         rows={3}
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -247,9 +253,9 @@ export default function Tasks() {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">Priority</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Priority</label>
                             <select
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
+                                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                 value={formData.priority}
                                 onChange={(e) => setFormData({ ...formData, priority: e.target.value as Task['priority'] })}
                             >
@@ -259,9 +265,9 @@ export default function Tasks() {
                             </select>
                         </div>
                         <div>
-                             <label className="block text-sm font-medium text-gray-700">Status</label>
+                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
                             <select
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
+                                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                 value={formData.status}
                                 onChange={(e) => setFormData({ ...formData, status: e.target.value as Task['status'] })}
                             >
@@ -273,9 +279,9 @@ export default function Tasks() {
                     </div>
                     
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Assignee</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Assignee</label>
                         <select
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2"
+                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             value={formData.assignee_id}
                             onChange={(e) => setFormData({ ...formData, assignee_id: e.target.value })}
                         >
@@ -289,14 +295,14 @@ export default function Tasks() {
                     <div className="mt-6 flex justify-end space-x-3">
                       <button
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 dark:bg-gray-600 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 transition-colors"
                         onClick={closeModal}
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors"
                       >
                         {editingTask ? 'Save Changes' : 'Create Task'}
                       </button>

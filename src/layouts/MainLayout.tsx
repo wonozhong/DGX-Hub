@@ -11,6 +11,7 @@ import {
   ArrowRightOnRectangleIcon,
   SunIcon,
   MoonIcon,
+  GlobeAltIcon,
 } from '@heroicons/react/24/outline';
 import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
@@ -33,6 +34,10 @@ export default function MainLayout() {
   const { signOut, user } = useAuthStore();
   const { isDark, toggleTheme } = useTheme();
 
+  const filteredNavigation = user?.role === 'user' 
+    ? navigation.filter(item => ['Dashboard', 'Forum'].includes(item.name))
+    : navigation;
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/login');
@@ -40,7 +45,7 @@ export default function MainLayout() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
             <Transition.Child
@@ -95,7 +100,7 @@ export default function MainLayout() {
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <ul role="list" className="-mx-2 space-y-1">
-                            {navigation.map((item) => (
+                            {filteredNavigation.map((item) => (
                               <li key={item.name}>
                                 <Link
                                   to={item.href}
@@ -120,6 +125,16 @@ export default function MainLayout() {
                           </ul>
                         </li>
                         <li className="mt-auto">
+                          <Link
+                            to="/"
+                            className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400 mb-2"
+                          >
+                            <GlobeAltIcon
+                              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400"
+                              aria-hidden="true"
+                            />
+                            Back to Home
+                          </Link>
                           <Link
                              to={`/profile/${user?.id}`}
                              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer transition-colors"
@@ -165,7 +180,7 @@ export default function MainLayout() {
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
                   <ul role="list" className="-mx-2 space-y-1">
-                    {navigation.map((item) => (
+                    {filteredNavigation.map((item) => (
                       <li key={item.name}>
                         <Link
                           to={item.href}
@@ -213,6 +228,16 @@ export default function MainLayout() {
                 </li>
                 <li className="mt-auto">
                     <Link
+                        to="/"
+                        className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400 mb-2"
+                    >
+                        <GlobeAltIcon
+                            className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400"
+                            aria-hidden="true"
+                        />
+                        Back to Home
+                    </Link>
+                    <Link
                          to={`/profile/${user?.id}`}
                          className="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer transition-colors"
                     >
@@ -240,9 +265,10 @@ export default function MainLayout() {
         </div>
 
         <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            <button type="button" className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-300 lg:hidden" onClick={() => setSidebarOpen(true)}>
-              <span className="sr-only">Open sidebar</span>
+            {/* Top Bar - No border in dark mode, simplified */}
+            <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+              <button type="button" className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-300 lg:hidden" onClick={() => setSidebarOpen(true)}>
+                <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
 

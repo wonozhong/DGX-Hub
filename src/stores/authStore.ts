@@ -33,7 +33,34 @@ export const useAuthStore = create<AuthState>((set) => ({
           .single();
           
         if (profile) {
-          set({ user: profile });
+          // Check if user is in whitelist but has 'user' role, if so upgrade them
+          if (profile.role === 'user') {
+             const { data: whitelist } = await supabase
+                .from('employee_whitelist')
+                .select('email')
+                .eq('email', profile.email)
+                .single();
+             
+             if (whitelist) {
+                 // Upgrade to employee
+                 const { data: updatedProfile, error: updateError } = await supabase
+                    .from('users')
+                    .update({ role: 'employee' })
+                    .eq('id', profile.id)
+                    .select()
+                    .single();
+                 
+                 if (!updateError && updatedProfile) {
+                     set({ user: updatedProfile });
+                 } else {
+                     set({ user: profile });
+                 }
+             } else {
+                 set({ user: profile });
+             }
+          } else {
+             set({ user: profile });
+          }
         } else {
             // If fetch failed, check if it's because it doesn't exist or other error
             if (fetchError && fetchError.code !== 'PGRST116') {
@@ -41,12 +68,24 @@ export const useAuthStore = create<AuthState>((set) => ({
                 // Don't give up yet, maybe try to insert anyway if it's a missing profile issue masked by something else
             }
 
+            // Check whitelist for new user
+            let initialRole = 'user';
+            const { data: whitelist } = await supabase
+                .from('employee_whitelist')
+                .select('email')
+                .eq('email', session.user.email!)
+                .single();
+            
+            if (whitelist) {
+                initialRole = 'employee';
+            }
+
             // Profile missing (e.g. created before trigger was added), create it now
             const newProfile: User = {
                 id: session.user.id,
                 email: session.user.email!,
                 name: session.user.user_metadata.name || session.user.email!.split('@')[0],
-                role: 'employee',
+                role: initialRole as any,
                 department: null,
                 phone_number: session.user.user_metadata.phone_number || null,
                 created_at: new Date().toISOString(),

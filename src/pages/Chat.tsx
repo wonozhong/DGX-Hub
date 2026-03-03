@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuthStore } from '../stores/authStore';
 import { User, Message } from '../types';
@@ -19,6 +19,10 @@ import { toast } from 'react-hot-toast';
 export default function Chat() {
   const { user } = useAuthStore();
   const navigate = useNavigate();
+
+  if (user?.role === 'user') {
+    return <Navigate to="/dashboard" replace />;
+  }
   
   // Data States
   const [friends, setFriends] = useState<User[]>([]);
@@ -331,21 +335,21 @@ export default function Chat() {
   const offlineFriends = friends.filter(f => !onlineUserIds.has(f.id));
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] bg-white rounded-lg shadow overflow-hidden">
+    <div className="flex h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden border border-gray-200 dark:border-gray-700">
       {/* Sidebar */}
-      <div className="w-1/3 border-r border-gray-200 flex flex-col bg-gray-50">
+      <div className="w-1/3 border-r border-gray-200 dark:border-gray-700 flex flex-col bg-gray-50 dark:bg-gray-900">
         
         {/* Sidebar Header / Tabs */}
-        <div className="p-4 border-b border-gray-200 bg-white">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Chat</h2>
-          <div className="flex space-x-2 bg-gray-100 p-1 rounded-lg">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Chat</h2>
+          <div className="flex space-x-2 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
             <button
               onClick={() => setActiveTab('friends')}
               className={cn(
                 "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all",
                 activeTab === 'friends' 
-                  ? "bg-white text-blue-600 shadow-sm" 
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-300 shadow-sm" 
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
               <UsersIcon className="w-4 h-4 mr-1" />
@@ -356,8 +360,8 @@ export default function Chat() {
               className={cn(
                 "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all relative",
                 activeTab === 'requests' 
-                  ? "bg-white text-blue-600 shadow-sm" 
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-300 shadow-sm" 
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
               <ClockIcon className="w-4 h-4 mr-1" />
@@ -371,8 +375,8 @@ export default function Chat() {
               className={cn(
                 "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all",
                 activeTab === 'add_friend' 
-                  ? "bg-white text-blue-600 shadow-sm" 
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-300 shadow-sm" 
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
               <UserPlusIcon className="w-4 h-4 mr-1" />
@@ -388,7 +392,7 @@ export default function Chat() {
               
               {/* Online Friends */}
               <div>
-                <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 className="px-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
                   Online — {onlineFriends.length}
                 </h3>
                 <ul className="space-y-1">
@@ -398,7 +402,7 @@ export default function Chat() {
                       onClick={() => setSelectedUser(u)}
                       className={cn(
                         "p-3 rounded-lg cursor-pointer flex items-center space-x-3 transition-colors",
-                        selectedUser?.id === u.id ? "bg-blue-100" : "hover:bg-gray-100"
+                        selectedUser?.id === u.id ? "bg-blue-100 dark:bg-blue-900/40" : "hover:bg-gray-100 dark:hover:bg-gray-800"
                       )}
                     >
                       <div className="relative">
@@ -409,11 +413,11 @@ export default function Chat() {
                             u.name.charAt(0).toUpperCase()
                           )}
                         </div>
-                        <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white" />
+                        <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-gray-900" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{u.name}</p>
-                        <p className="text-xs text-green-600">Online</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{u.name}</p>
+                        <p className="text-xs text-green-600 dark:text-green-400">Online</p>
                       </div>
                     </li>
                   ))}
@@ -425,7 +429,7 @@ export default function Chat() {
 
               {/* Offline Friends */}
               <div>
-                <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 className="px-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
                   Offline — {offlineFriends.length}
                 </h3>
                 <ul className="space-y-1">
@@ -435,22 +439,22 @@ export default function Chat() {
                       onClick={() => setSelectedUser(u)}
                       className={cn(
                         "p-3 rounded-lg cursor-pointer flex items-center space-x-3 transition-colors opacity-75 hover:opacity-100",
-                        selectedUser?.id === u.id ? "bg-blue-100 opacity-100" : "hover:bg-gray-100"
+                        selectedUser?.id === u.id ? "bg-blue-100 dark:bg-blue-900/40 opacity-100" : "hover:bg-gray-100 dark:hover:bg-gray-800"
                       )}
                     >
                       <div className="relative">
-                        <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold overflow-hidden">
+                        <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold overflow-hidden">
                           {u.avatar_url ? (
                             <img src={u.avatar_url} alt={u.name} className="h-full w-full object-cover grayscale" />
                           ) : (
                             u.name.charAt(0).toUpperCase()
                           )}
                         </div>
-                        <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-gray-400 ring-2 ring-white" />
+                        <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-gray-400 ring-2 ring-white dark:ring-gray-900" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{u.name}</p>
-                        <p className="text-xs text-gray-500">Offline</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{u.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Offline</p>
                       </div>
                     </li>
                   ))}
@@ -465,32 +469,32 @@ export default function Chat() {
 
           {activeTab === 'requests' && (
              <div className="p-2">
-                <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 className="px-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
                     Incoming Requests — {incomingRequests.length}
                 </h3>
                 <ul className="space-y-2">
                     {incomingRequests.map((u) => (
-                        <li key={u.id} className="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between shadow-sm">
+                        <li key={u.id} className="p-3 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg flex items-center justify-between shadow-sm">
                             <div className="flex items-center space-x-3">
-                                <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">
+                                <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold">
                                     {u.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-gray-900">{u.name}</p>
-                                    <p className="text-xs text-gray-500">{u.department || 'User'}</p>
+                                    <p className="text-sm font-medium text-gray-900 dark:text-white">{u.name}</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">{u.department || 'User'}</p>
                                 </div>
                             </div>
                             <div className="flex space-x-1">
                                 <button
                                     onClick={() => handleAcceptRequest(u.id)}
-                                    className="p-2 bg-green-50 text-green-600 rounded-full hover:bg-green-100 transition-colors"
+                                    className="p-2 bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors"
                                     title="Accept"
                                 >
                                     <CheckIcon className="w-5 h-5" />
                                 </button>
                                 <button
                                     onClick={() => handleRejectRequest(u.id)}
-                                    className="p-2 bg-red-50 text-red-600 rounded-full hover:bg-red-100 transition-colors"
+                                    className="p-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors"
                                     title="Reject"
                                 >
                                     <XMarkIcon className="w-5 h-5" />
@@ -499,7 +503,7 @@ export default function Chat() {
                         </li>
                     ))}
                     {incomingRequests.length === 0 && (
-                        <div className="text-center py-8 text-gray-500">
+                        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                             <p>No new friend requests.</p>
                         </div>
                     )}
@@ -509,32 +513,32 @@ export default function Chat() {
 
           {activeTab === 'add_friend' && (
             <div className="p-2">
-              <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              <h3 className="px-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
                 Suggested People
               </h3>
               <ul className="space-y-2">
                 {potentialFriends.map((u) => {
                     const isSent = sentRequests.has(u.id);
                     return (
-                        <li key={u.id} className="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between shadow-sm">
+                        <li key={u.id} className="p-3 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-lg flex items-center justify-between shadow-sm">
                             <div className="flex items-center space-x-3">
-                            <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">
+                            <div className="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold">
                                 {u.name.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-gray-900">{u.name}</p>
-                                <p className="text-xs text-gray-500">{u.department || 'User'}</p>
+                                <p className="text-sm font-medium text-gray-900 dark:text-white">{u.name}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">{u.department || 'User'}</p>
                             </div>
                             </div>
                             {isSent ? (
-                                <span className="text-xs text-gray-400 font-medium px-2 py-1 bg-gray-100 rounded-full">
+                                <span className="text-xs text-gray-400 font-medium px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">
                                     Sent
                                 </span>
                             ) : (
                                 <button
                                     onClick={() => handleSendFriendRequest(u.id)}
                                     disabled={loading}
-                                    className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
+                                    className="p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
                                     title="Add Friend"
                                 >
                                     <UserPlusIcon className="w-5 h-5" />
@@ -544,7 +548,7 @@ export default function Chat() {
                     )
                 })}
                 {potentialFriends.length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <p>No new people to add.</p>
                   </div>
                 )}
@@ -555,34 +559,34 @@ export default function Chat() {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
         {selectedUser ? (
           <>
             {/* Chat Header */}
-            <div className="p-4 border-b border-gray-200 flex items-center justify-between shadow-sm z-10">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between shadow-sm z-10 bg-white dark:bg-gray-800">
               <div className="flex items-center space-x-3">
                 <div 
-                  className="h-10 w-10 cursor-pointer rounded-full overflow-hidden border border-gray-200"
+                  className="h-10 w-10 cursor-pointer rounded-full overflow-hidden border border-gray-200 dark:border-gray-600"
                   onClick={() => navigate(`/profile/${selectedUser.id}`)}
                 >
                   {selectedUser.avatar_url ? (
                       <img className="h-full w-full object-cover" src={selectedUser.avatar_url} alt="" />
                   ) : (
-                      <div className="h-full w-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                      <div className="h-full w-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold">
                           {selectedUser.name.charAt(0).toUpperCase()}
                       </div>
                   )}
                 </div>
                 <div>
                   <h3 
-                    className="text-lg font-bold text-gray-900 cursor-pointer hover:underline"
+                    className="text-lg font-bold text-gray-900 dark:text-white cursor-pointer hover:underline"
                     onClick={() => navigate(`/profile/${selectedUser.id}`)}
                   >
                     {selectedUser.name}
                   </h3>
                   <div className="flex items-center space-x-1">
                     <span className={cn("h-2 w-2 rounded-full", onlineUserIds.has(selectedUser.id) ? "bg-green-500" : "bg-gray-300")} />
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       {onlineUserIds.has(selectedUser.id) ? 'Online' : 'Offline'}
                     </span>
                   </div>
@@ -591,7 +595,7 @@ export default function Chat() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50 dark:bg-gray-900">
               {messages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-400 opacity-50">
                   <ChatBubbleLeftRightIcon className="w-16 h-16 mb-2" />
@@ -613,13 +617,13 @@ export default function Chat() {
                           "max-w-[70%] rounded-2xl px-4 py-2 shadow-sm relative",
                           isMe
                             ? "bg-blue-600 text-white rounded-br-none"
-                            : "bg-white text-gray-900 rounded-bl-none border border-gray-100"
+                            : "bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-none border border-gray-100 dark:border-gray-600"
                         )}
                       >
                         <p className="text-sm leading-relaxed">{msg.content}</p>
                         <p className={cn(
                             "text-[10px] mt-1 text-right opacity-70",
-                            isMe ? "text-blue-100" : "text-gray-400"
+                            isMe ? "text-blue-100" : "text-gray-400 dark:text-gray-300"
                         )}>
                           {format(new Date(msg.created_at), 'HH:mm')}
                         </p>
@@ -632,14 +636,14 @@ export default function Chat() {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={sendMessage} className="p-4 bg-white border-t border-gray-200">
-              <div className="flex space-x-2 items-center bg-gray-50 rounded-full px-2 py-1 border border-gray-200 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+            <form onSubmit={sendMessage} className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex space-x-2 items-center bg-gray-50 dark:bg-gray-700 rounded-full px-2 py-1 border border-gray-200 dark:border-gray-600 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
                 <input
                   type="text"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="flex-1 bg-transparent border-none focus:ring-0 text-gray-900 placeholder-gray-500 px-4 py-2"
+                  className="flex-1 bg-transparent border-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-4 py-2"
                 />
                 <button
                   type="submit"
@@ -652,11 +656,11 @@ export default function Chat() {
             </form>
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 text-gray-500">
-            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-              <UsersIcon className="w-12 h-12 text-gray-400" />
+          <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+            <div className="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+              <UsersIcon className="w-12 h-12 text-gray-400 dark:text-gray-500" />
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-2">Welcome to Chat</h3>
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">Welcome to Chat</h3>
             <p className="text-center max-w-xs">Select a friend from the sidebar or add new friends to start messaging.</p>
           </div>
         )}
