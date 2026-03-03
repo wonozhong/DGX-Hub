@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd sindo-marine && npm install && npm run build",
-  "outputDirectory": "sindo-marine/dist",
+  "buildCommand": "tsc -b && vite build",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",
