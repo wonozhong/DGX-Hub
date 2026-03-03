@@ -7,10 +7,14 @@ import {
   PaperAirplaneIcon, 
   UserPlusIcon, 
   UsersIcon,
-  ChatBubbleLeftRightIcon
+  ChatBubbleLeftRightIcon,
+  CheckIcon,
+  XMarkIcon,
+  ClockIcon
 } from '@heroicons/react/24/solid';
 import { format } from 'date-fns';
 import { cn } from '../lib/utils';
+import { toast } from 'react-hot-toast';
 
 export default function Chat() {
   const { user } = useAuthStore();
@@ -19,12 +23,14 @@ export default function Chat() {
   // Data States
   const [friends, setFriends] = useState<User[]>([]);
   const [potentialFriends, setPotentialFriends] = useState<User[]>([]);
+  const [incomingRequests, setIncomingRequests] = useState<User[]>([]);
+  const [sentRequests, setSentRequests] = useState<Set<string>>(new Set());
   const [onlineUserIds, setOnlineUserIds] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   
   // UI States
-  const [activeTab, setActiveTab] = useState<'friends' | 'add_friend'>('friends');
+  const [activeTab, setActiveTab] = useState<'friends' | 'add_friend' | 'requests'>('friends');
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -35,6 +41,7 @@ export default function Chat() {
     if (!user) return;
 
     fetchFriends();
+    fetchFriendRequests();
     fetchPotentialFriends();
 
     // Setup Presence for Online Status
@@ -144,10 +151,45 @@ export default function Chat() {
     if (usersData) setFriends(usersData);
   };
 
+  const fetchFriendRequests = async () => {
+    if (!user) return;
+    
+    // 1. Fetch Incoming Requests (where I am friend_id and status is pending)
+    const { data: incoming } = await supabase
+      .from('friendships')
+      .select('user_id')
+      .eq('friend_id', user.id)
+      .eq('status', 'pending');
+      
+    if (incoming && incoming.length > 0) {
+        const requesterIds = incoming.map(r => r.user_id);
+        const { data: requesters } = await supabase
+            .from('users')
+            .select('*')
+            .in('id', requesterIds);
+        
+        if (requesters) setIncomingRequests(requesters);
+    } else {
+        setIncomingRequests([]);
+    }
+
+    // 2. Fetch Sent Requests (where I am user_id and status is pending)
+    // This is needed to show "Request Sent" status in the "Add Friend" list
+    const { data: sent } = await supabase
+        .from('friendships')
+        .select('friend_id')
+        .eq('user_id', user.id)
+        .eq('status', 'pending');
+        
+    if (sent) {
+        setSentRequests(new Set(sent.map(r => r.friend_id)));
+    }
+  };
+
   const fetchPotentialFriends = async () => {
     if (!user) return;
     
-    // Get IDs of current friends + self
+    // Get IDs of current friends + self + pending requests
     const { data: friendships } = await supabase
       .from('friendships')
       .select('user_id, friend_id')
@@ -222,25 +264,62 @@ export default function Chat() {
     }
   };
 
-  const handleAddFriend = async (friendId: string) => {
+  const handleSendFriendRequest = async (friendId: string) => {
     if (!user) return;
     setLoading(true);
     
-    // Insert friendship request
     const { error } = await supabase
       .from('friendships')
       .insert([{
         user_id: user.id,
         friend_id: friendId,
-        status: 'accepted' // Auto-accept for demo purposes (or pending if implementing full flow)
+        status: 'pending' 
       }]);
 
     if (!error) {
-      // Refresh lists
-      await fetchFriends();
-      await fetchPotentialFriends();
+      toast.success('Friend request sent!');
+      setSentRequests(prev => new Set(prev).add(friendId));
+      // Optionally remove from potential list immediately
+      // setPotentialFriends(prev => prev.filter(u => u.id !== friendId)); 
+    } else {
+        toast.error('Failed to send request');
     }
     setLoading(false);
+  };
+
+  const handleAcceptRequest = async (requesterId: string) => {
+      if (!user) return;
+      
+      const { error } = await supabase
+        .from('friendships')
+        .update({ status: 'accepted' })
+        .eq('user_id', requesterId)
+        .eq('friend_id', user.id);
+        
+      if (!error) {
+          toast.success('Friend request accepted');
+          fetchFriendRequests(); // Refresh requests
+          fetchFriends(); // Refresh friends list
+      } else {
+          toast.error('Failed to accept request');
+      }
+  };
+
+  const handleRejectRequest = async (requesterId: string) => {
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('friendships')
+        .delete()
+        .eq('user_id', requesterId)
+        .eq('friend_id', user.id);
+        
+      if (!error) {
+          toast.success('Friend request rejected');
+          setIncomingRequests(prev => prev.filter(u => u.id !== requesterId));
+      } else {
+          toast.error('Failed to reject request');
+      }
   };
 
   const scrollToBottom = () => {
@@ -263,33 +342,48 @@ export default function Chat() {
             <button
               onClick={() => setActiveTab('friends')}
               className={cn(
-                "flex-1 flex items-center justify-center py-2 text-sm font-medium rounded-md transition-all",
+                "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all",
                 activeTab === 'friends' 
                   ? "bg-white text-blue-600 shadow-sm" 
                   : "text-gray-500 hover:text-gray-700"
               )}
             >
-              <UsersIcon className="w-4 h-4 mr-2" />
+              <UsersIcon className="w-4 h-4 mr-1" />
               Friends
+            </button>
+            <button
+              onClick={() => setActiveTab('requests')}
+              className={cn(
+                "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all relative",
+                activeTab === 'requests' 
+                  ? "bg-white text-blue-600 shadow-sm" 
+                  : "text-gray-500 hover:text-gray-700"
+              )}
+            >
+              <ClockIcon className="w-4 h-4 mr-1" />
+              Requests
+              {incomingRequests.length > 0 && (
+                  <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+              )}
             </button>
             <button
               onClick={() => setActiveTab('add_friend')}
               className={cn(
-                "flex-1 flex items-center justify-center py-2 text-sm font-medium rounded-md transition-all",
+                "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all",
                 activeTab === 'add_friend' 
                   ? "bg-white text-blue-600 shadow-sm" 
                   : "text-gray-500 hover:text-gray-700"
               )}
             >
-              <UserPlusIcon className="w-4 h-4 mr-2" />
-              Add Friend
+              <UserPlusIcon className="w-4 h-4 mr-1" />
+              Add
             </button>
           </div>
         </div>
 
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
-          {activeTab === 'friends' ? (
+          {activeTab === 'friends' && (
             <div className="p-2 space-y-6">
               
               {/* Online Friends */}
@@ -367,33 +461,88 @@ export default function Chat() {
               </div>
 
             </div>
-          ) : (
+          )}
+
+          {activeTab === 'requests' && (
+             <div className="p-2">
+                <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                    Incoming Requests — {incomingRequests.length}
+                </h3>
+                <ul className="space-y-2">
+                    {incomingRequests.map((u) => (
+                        <li key={u.id} className="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between shadow-sm">
+                            <div className="flex items-center space-x-3">
+                                <div className="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">
+                                    {u.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium text-gray-900">{u.name}</p>
+                                    <p className="text-xs text-gray-500">{u.department || 'User'}</p>
+                                </div>
+                            </div>
+                            <div className="flex space-x-1">
+                                <button
+                                    onClick={() => handleAcceptRequest(u.id)}
+                                    className="p-2 bg-green-50 text-green-600 rounded-full hover:bg-green-100 transition-colors"
+                                    title="Accept"
+                                >
+                                    <CheckIcon className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={() => handleRejectRequest(u.id)}
+                                    className="p-2 bg-red-50 text-red-600 rounded-full hover:bg-red-100 transition-colors"
+                                    title="Reject"
+                                >
+                                    <XMarkIcon className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </li>
+                    ))}
+                    {incomingRequests.length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                            <p>No new friend requests.</p>
+                        </div>
+                    )}
+                </ul>
+             </div>
+          )}
+
+          {activeTab === 'add_friend' && (
             <div className="p-2">
               <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
                 Suggested People
               </h3>
               <ul className="space-y-2">
-                {potentialFriends.map((u) => (
-                  <li key={u.id} className="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between shadow-sm">
-                    <div className="flex items-center space-x-3">
-                      <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">
-                        {u.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{u.name}</p>
-                        <p className="text-xs text-gray-500">{u.department || 'User'}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => handleAddFriend(u.id)}
-                      disabled={loading}
-                      className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
-                      title="Add Friend"
-                    >
-                      <UserPlusIcon className="w-5 h-5" />
-                    </button>
-                  </li>
-                ))}
+                {potentialFriends.map((u) => {
+                    const isSent = sentRequests.has(u.id);
+                    return (
+                        <li key={u.id} className="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between shadow-sm">
+                            <div className="flex items-center space-x-3">
+                            <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">
+                                {u.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-gray-900">{u.name}</p>
+                                <p className="text-xs text-gray-500">{u.department || 'User'}</p>
+                            </div>
+                            </div>
+                            {isSent ? (
+                                <span className="text-xs text-gray-400 font-medium px-2 py-1 bg-gray-100 rounded-full">
+                                    Sent
+                                </span>
+                            ) : (
+                                <button
+                                    onClick={() => handleSendFriendRequest(u.id)}
+                                    disabled={loading}
+                                    className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
+                                    title="Add Friend"
+                                >
+                                    <UserPlusIcon className="w-5 h-5" />
+                                </button>
+                            )}
+                        </li>
+                    )
+                })}
                 {potentialFriends.length === 0 && (
                   <div className="text-center py-8 text-gray-500">
                     <p>No new people to add.</p>

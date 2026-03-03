@@ -1,1 +1,10 @@
-{"rewrites":[{"source":"/(.*)","destination":"/index.html"}]}
+{
+  "buildCommand": "cd sindo-marine && npm install && npm run build",
+  "outputDirectory": "sindo-marine/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

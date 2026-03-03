@@ -8,12 +8,14 @@ import {
   ShieldCheckIcon,
   ChatBubbleLeftRightIcon,
   UserGroupIcon,
-  UserIcon,
   ArrowRightOnRectangleIcon,
+  SunIcon,
+  MoonIcon,
 } from '@heroicons/react/24/outline';
 import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { cn } from '../lib/utils';
+import { useTheme } from '../hooks/useTheme';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -29,6 +31,7 @@ export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { signOut, user } = useAuthStore();
+  const { isDark, toggleTheme } = useTheme();
 
   const handleSignOut = async () => {
     await signOut();
@@ -37,7 +40,7 @@ export default function MainLayout() {
 
   return (
     <>
-      <div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
             <Transition.Child
@@ -80,9 +83,13 @@ export default function MainLayout() {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component for mobile */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-gray-900 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
-                      <img src="/images/dgx-logo-black.svg" alt="DGX Logo" className="h-8" />
+                      <img 
+                        src={isDark ? "/images/dgx-logo-white.svg" : "/images/dgx-logo-black.svg"} 
+                        alt="DGX Logo" 
+                        className="h-8" 
+                      />
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -94,14 +101,14 @@ export default function MainLayout() {
                                   to={item.href}
                                   className={cn(
                                     location.pathname === item.href
-                                      ? 'bg-gray-50 text-blue-600'
-                                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50',
+                                      ? 'bg-gray-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400'
+                                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                 >
                                   <item.icon
                                     className={cn(
-                                      location.pathname === item.href ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600',
+                                      location.pathname === item.href ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400',
                                       'h-6 w-6 shrink-0'
                                     )}
                                     aria-hidden="true"
@@ -115,12 +122,12 @@ export default function MainLayout() {
                         <li className="mt-auto">
                           <Link
                              to={`/profile/${user?.id}`}
-                             className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer transition-colors"
+                             className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer transition-colors"
                           >
                             {user?.avatar_url ? (
-                                <img className="h-8 w-8 rounded-full bg-gray-50 object-cover" src={user.avatar_url} alt="" />
+                                <img className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 object-cover" src={user.avatar_url} alt="" />
                             ) : (
-                                <div className="h-8 w-8 rounded-full bg-gray-50 flex items-center justify-center text-blue-600 font-bold border border-gray-200">
+                                <div className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-gray-200 dark:border-gray-700">
                                     {user?.name?.charAt(0) || 'U'}
                                 </div>
                             )}
@@ -129,9 +136,9 @@ export default function MainLayout() {
                           </Link>
                            <button
                             onClick={handleSignOut}
-                            className="text-gray-700 hover:text-red-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full"
+                            className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full"
                           >
-                            <ArrowRightOnRectangleIcon className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-red-600" aria-hidden="true" />
+                            <ArrowRightOnRectangleIcon className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500 group-hover:text-red-600 dark:group-hover:text-red-400" aria-hidden="true" />
                             Sign out
                           </button>
                         </li>
@@ -146,9 +153,13 @@ export default function MainLayout() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-               <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-8 filter invert" />
+               <img 
+                 src={isDark ? "/images/dgx-logo-white.svg" : "/images/dgx-logo-black.svg"} 
+                 alt="DGX Logo" 
+                 className="h-8" 
+               />
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -160,14 +171,14 @@ export default function MainLayout() {
                           to={item.href}
                           className={cn(
                             location.pathname === item.href
-                              ? 'bg-gray-50 text-blue-600'
-                              : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50',
+                              ? 'bg-gray-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400'
+                              : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <item.icon
                             className={cn(
-                              location.pathname === item.href ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600',
+                              location.pathname === item.href ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
@@ -182,14 +193,14 @@ export default function MainLayout() {
                           to={adminNavigation.href}
                           className={cn(
                             location.pathname === adminNavigation.href
-                              ? 'bg-gray-50 text-blue-600'
-                              : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50',
+                              ? 'bg-gray-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400'
+                              : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <adminNavigation.icon
                             className={cn(
-                              location.pathname === adminNavigation.href ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-600',
+                              location.pathname === adminNavigation.href ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
@@ -203,12 +214,12 @@ export default function MainLayout() {
                 <li className="mt-auto">
                     <Link
                          to={`/profile/${user?.id}`}
-                         className="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50 rounded-md cursor-pointer transition-colors"
+                         className="flex items-center gap-x-4 py-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer transition-colors"
                     >
                         {user?.avatar_url ? (
-                            <img className="h-8 w-8 rounded-full bg-gray-50 object-cover" src={user.avatar_url} alt="" />
+                            <img className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 object-cover" src={user.avatar_url} alt="" />
                         ) : (
-                            <div className="h-8 w-8 rounded-full bg-gray-50 flex items-center justify-center text-blue-600 font-bold border border-gray-200">
+                            <div className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-gray-200 dark:border-gray-700">
                                 {user?.name?.charAt(0) || 'U'}
                             </div>
                         )}
@@ -217,9 +228,9 @@ export default function MainLayout() {
                     </Link>
                      <button
                         onClick={handleSignOut}
-                        className="text-gray-700 hover:text-red-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full"
+                        className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full"
                       >
-                        <ArrowRightOnRectangleIcon className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-red-600" aria-hidden="true" />
+                        <ArrowRightOnRectangleIcon className="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500 group-hover:text-red-600 dark:group-hover:text-red-400" aria-hidden="true" />
                         Sign out
                       </button>
                 </li>
@@ -229,17 +240,29 @@ export default function MainLayout() {
         </div>
 
         <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
+          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+            <button type="button" className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-300 lg:hidden" onClick={() => setSidebarOpen(true)}>
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
 
             {/* Separator */}
-            <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
+            <div className="h-6 w-px bg-gray-200 dark:bg-gray-800 lg:hidden" aria-hidden="true" />
 
-            <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+            <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6 items-center">
               <div className="flex flex-1"></div>
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                {isDark ? (
+                  <SunIcon className="h-6 w-6" />
+                ) : (
+                  <MoonIcon className="h-6 w-6" />
+                )}
+              </button>
             </div>
           </div>
 

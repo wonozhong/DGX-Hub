@@ -16,17 +16,15 @@ export default function LandingPage() {
       <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-yellow-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <div className="flex-shrink-0 flex items-center gap-2">
-              <div className="w-10 h-10 bg-yellow-600 rounded-full flex items-center justify-center text-black font-bold text-xl border-2 border-yellow-400">
-                M
-              </div>
-              <span className="text-xl font-bold text-yellow-500 tracking-widest uppercase">Mandala</span>
+            <div className="flex-shrink-0 flex items-center">
+              <img src="/images/mandala-logo.png" alt="Mandala Logo" className="h-12 w-auto object-contain" />
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
                 <a href="#about" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
                 <a href="#features" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
                 <a href="#gallery" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Gallery</a>
+                <a href="#contact" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
                 <Link to={user ? "/dashboard" : "/login"} className="bg-yellow-600 text-black hover:bg-yellow-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105">
                   {user ? "Dashboard" : "Enter Realm"}
                 </Link>
@@ -44,35 +42,28 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <div className="flex justify-center items-center gap-2 mb-2 animate-fade-in-up opacity-80">
+          <div className="flex justify-center items-center gap-2 mb-6 animate-fade-in-up opacity-80">
             <span className="text-gray-400 tracking-widest text-xs uppercase">Powered by</span>
             <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-5" />
           </div>
 
-          <div className="relative mb-8 flex justify-center">
-            {/* Logo placeholder - User needs to add mandala-logo.png to public/images */}
-            <img 
-              src="/images/mandala-logo.png" 
-              alt="Mandala Logo" 
-              className="w-48 md:w-64 h-auto drop-shadow-2xl animate-fade-in opacity-90"
-              onError={(e) => e.currentTarget.style.display = 'none'}
-            />
-          </div>
-
-          <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-4 animate-pulse">
+          <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-8 animate-pulse">
             Indie AAA • RPG • Global
           </h2>
-          <h1 className="text-5xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-yellow-700 mb-8 drop-shadow-2xl font-serif">
-            MANDALA<br />
-            <span className="text-3xl md:text-5xl tracking-widest text-yellow-100 block mt-2 font-light border-t border-yellow-900/50 pt-4 max-w-4xl mx-auto">
-              SHADOWED TRUTH
-            </span>
-          </h1>
+          
+          <div className="mb-12 flex justify-center">
+             <img 
+               src="/images/mandala-logo.png" 
+               alt="MANDALA: Shadowed Truths" 
+               className="w-full max-w-3xl h-auto drop-shadow-[0_0_50px_rgba(234,179,8,0.3)] animate-fade-in transform hover:scale-105 transition-transform duration-700" 
+             />
+          </div>
+
           <p className="text-gray-300 text-lg md:text-2xl max-w-2xl mx-auto mb-12 font-sans leading-relaxed">
             Blends the richness of Nusantara-inspired mythology with modern, globally appealing design.
           </p>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <Link to={user ? "/dashboard" : "/login"} className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500 z-50 cursor-pointer">
+            <Link to={user ? "/dashboard" : "/login"} className="group relative px-8 py-4 bg-yellow-600 text-black font-bold text-lg rounded-sm overflow-hidden transition-all hover:bg-yellow-500 z-50 cursor-pointer shadow-[0_0_20px_rgba(234,179,8,0.5)]">
               <span className="relative z-10 flex items-center gap-2">
                 {user ? "GO TO DASHBOARD" : "ENTER REALM"} <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
@@ -138,12 +129,49 @@ export default function LandingPage() {
          </div>
       </div>
 
+      {/* Contact Section */}
+      <div id="contact" className="py-24 bg-zinc-900 relative">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 mb-8">CONTACT US</h2>
+            <p className="text-gray-400 mb-12">
+              Interested in partnership, investment, or joining our team? Reach out to us.
+            </p>
+            
+            <form className="space-y-6 text-left">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-400">Name</label>
+                <input type="text" id="name" className="mt-1 block w-full rounded-md bg-black border-gray-700 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm p-3" placeholder="Your Name" />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-400">Email</label>
+                <input type="email" id="email" className="mt-1 block w-full rounded-md bg-black border-gray-700 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm p-3" placeholder="you@example.com" />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-400">Message</label>
+                <textarea id="message" rows={4} className="mt-1 block w-full rounded-md bg-black border-gray-700 text-white shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm p-3" placeholder="How can we help you?"></textarea>
+              </div>
+              <div>
+                <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors font-bold">
+                  SEND MESSAGE
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-16 pt-8 border-t border-gray-800">
+               <p className="text-gray-500">Or email us directly at:</p>
+               <a href="mailto:contact@dragonixinteractive.com" className="text-yellow-500 hover:text-yellow-400 font-medium text-lg mt-2 inline-block">
+                 contact@dragonixinteractive.com
+               </a>
+            </div>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className="bg-zinc-950 py-12 border-t border-yellow-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="mb-4 md:mb-0 flex flex-col items-start">
-               <span className="text-2xl font-bold text-yellow-500 tracking-widest uppercase mb-4">Mandala</span>
+               <img src="/images/mandala-logo.png" alt="Mandala" className="h-16 w-auto mb-6 opacity-90" />
                
                <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-2">
                  <span className="text-gray-500 text-xs uppercase tracking-wider">Created by</span>
