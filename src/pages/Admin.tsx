@@ -137,7 +137,7 @@ export default function Admin() {
                     onClick={() => setActiveTab('users')}
                     className={`px-4 py-2 text-sm font-medium rounded-md ${
                         activeTab === 'users'
-                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                            ? 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300'
                             : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
                     }`}
                 >
@@ -147,7 +147,7 @@ export default function Admin() {
                     onClick={() => setActiveTab('whitelist')}
                     className={`px-4 py-2 text-sm font-medium rounded-md ${
                         activeTab === 'whitelist'
-                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                            ? 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300'
                             : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
                     }`}
                 >
@@ -195,7 +195,7 @@ export default function Admin() {
                             {u.avatar_url ? (
                                 <img className="h-10 w-10 rounded-full object-cover" src={u.avatar_url} alt="" />
                             ) : (
-                                <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold">
+                                <div className="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-purple-600 dark:text-purple-300 font-bold">
                                     {u.name.charAt(0).toUpperCase()}
                                 </div>
                             )}
@@ -209,7 +209,7 @@ export default function Admin() {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                         {editingUser === u.id ? (
                           <select
-                            className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600"
+                            className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600"
                             value={formData.department || ''}
                             onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                           >
@@ -233,7 +233,7 @@ export default function Admin() {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                         {editingUser === u.id ? (
                           <select
-                            className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600"
+                            className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600"
                             value={formData.role}
                             onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
                           >
@@ -246,7 +246,7 @@ export default function Admin() {
                           <span className={`capitalize ${
                              u.role === 'admin' ? 'font-bold text-red-600 dark:text-red-400' :
                              u.role === 'manager' ? 'font-semibold text-purple-600 dark:text-purple-400' :
-                             u.role === 'employee' ? 'text-blue-600 dark:text-blue-400' :
+                             u.role === 'employee' ? 'text-purple-600 dark:text-purple-400' :
                              'text-gray-600 dark:text-gray-400'
                           }`}>
                             {u.role}
@@ -257,7 +257,7 @@ export default function Admin() {
                         {editingUser === u.id ? (
                           <input
                             type="text"
-                            className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600"
+                            className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-600"
                             value={formData.phone_number || ''}
                             onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
                           />
@@ -284,7 +284,7 @@ export default function Admin() {
                         ) : (
                           <button
                             onClick={() => handleEdit(u)}
-                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                            className="text-purple-600 hover:text-purple-900 dark:text-purple-400 dark:hover:text-purple-300"
                           >
                             Edit
                           </button>
@@ -308,12 +308,12 @@ export default function Admin() {
                           placeholder="Enter email address"
                           value={newEmail}
                           onChange={(e) => setNewEmail(e.target.value)}
-                          className="flex-1 rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 border"
+                          className="flex-1 rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 border"
                           required
                       />
                       <button
                           type="submit"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                       >
                           Add to Whitelist
                       </button>

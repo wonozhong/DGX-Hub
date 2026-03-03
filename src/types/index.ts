@@ -36,6 +36,7 @@ export interface ForumThread {
   title: string;
   creator_id: string;
   channel: string;
+  visibility: 'public' | 'internal';
   created_at: string;
   updated_at: string;
 }
@@ -46,4 +47,5 @@ export interface ForumReply {
   user_id: string;
   content: string;
   created_at: string;
+  updated_at: string;
 }

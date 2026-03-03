@@ -122,7 +122,7 @@ export default function Login() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-[#D6D6D6] shadow-sm ring-1 ring-inset ring-[#3A3A3A] placeholder:text-[#A8A8A8] focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 px-3 bg-[#2A2A2A]"
+                className="block w-full rounded-md border-0 py-1.5 text-[#D6D6D6] shadow-sm ring-1 ring-inset ring-[#3A3A3A] placeholder:text-[#A8A8A8] focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6 px-3 bg-[#2A2A2A]"
               />
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function Login() {
                     <button 
                       type="button" 
                       onClick={() => setMode('forgot')}
-                      className="font-semibold text-blue-500 hover:text-blue-400"
+                      className="font-semibold text-purple-500 hover:text-purple-400"
                     >
                       Forgot password?
                     </button>
@@ -154,7 +154,7 @@ export default function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-[#D6D6D6] shadow-sm ring-1 ring-inset ring-[#3A3A3A] placeholder:text-[#A8A8A8] focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 px-3 bg-[#2A2A2A]"
+                  className="block w-full rounded-md border-0 py-1.5 text-[#D6D6D6] shadow-sm ring-1 ring-inset ring-[#3A3A3A] placeholder:text-[#A8A8A8] focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6 px-3 bg-[#2A2A2A]"
                 />
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function Login() {
                   placeholder="08xxxxxxxxxx"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-[#D6D6D6] shadow-sm ring-1 ring-inset ring-[#3A3A3A] placeholder:text-[#A8A8A8] focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 px-3 bg-[#2A2A2A]"
+                  className="block w-full rounded-md border-0 py-1.5 text-[#D6D6D6] shadow-sm ring-1 ring-inset ring-[#3A3A3A] placeholder:text-[#A8A8A8] focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6 px-3 bg-[#2A2A2A]"
                 />
               </div>
             </div>
@@ -188,7 +188,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50"
+              className="flex w-full justify-center rounded-md bg-purple-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 disabled:opacity-50"
             >
               {loading
                 ? 'Processing...'
@@ -205,7 +205,7 @@ export default function Login() {
           {mode === 'signin' && (
             <>
               Not a member?{' '}
-              <button onClick={() => setMode('signup')} className="font-semibold leading-6 text-blue-500 hover:text-blue-400">
+              <button onClick={() => setMode('signup')} className="font-semibold leading-6 text-purple-500 hover:text-purple-400">
                 Sign up now
               </button>
             </>
@@ -213,13 +213,13 @@ export default function Login() {
           {mode === 'signup' && (
             <>
               Already have an account?{' '}
-              <button onClick={() => setMode('signin')} className="font-semibold leading-6 text-blue-500 hover:text-blue-400">
+              <button onClick={() => setMode('signin')} className="font-semibold leading-6 text-purple-500 hover:text-purple-400">
                 Sign in
               </button>
             </>
           )}
           {mode === 'forgot' && (
-            <button onClick={() => setMode('signin')} className="font-semibold leading-6 text-blue-500 hover:text-blue-400">
+            <button onClick={() => setMode('signin')} className="font-semibold leading-6 text-purple-500 hover:text-purple-400">
               Back to Sign in
             </button>
           )}

@@ -348,7 +348,7 @@ export default function Chat() {
               className={cn(
                 "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all",
                 activeTab === 'friends' 
-                  ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-300 shadow-sm" 
+                  ? "bg-white dark:bg-gray-600 text-purple-600 dark:text-purple-300 shadow-sm" 
                   : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
@@ -360,7 +360,7 @@ export default function Chat() {
               className={cn(
                 "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all relative",
                 activeTab === 'requests' 
-                  ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-300 shadow-sm" 
+                  ? "bg-white dark:bg-gray-600 text-purple-600 dark:text-purple-300 shadow-sm" 
                   : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
@@ -375,7 +375,7 @@ export default function Chat() {
               className={cn(
                 "flex-1 flex items-center justify-center py-2 text-xs font-medium rounded-md transition-all",
                 activeTab === 'add_friend' 
-                  ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-300 shadow-sm" 
+                  ? "bg-white dark:bg-gray-600 text-purple-600 dark:text-purple-300 shadow-sm" 
                   : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
@@ -402,11 +402,11 @@ export default function Chat() {
                       onClick={() => setSelectedUser(u)}
                       className={cn(
                         "p-3 rounded-lg cursor-pointer flex items-center space-x-3 transition-colors",
-                        selectedUser?.id === u.id ? "bg-blue-100 dark:bg-blue-900/40" : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                        selectedUser?.id === u.id ? "bg-purple-100 dark:bg-purple-900/40" : "hover:bg-gray-100 dark:hover:bg-gray-800"
                       )}
                     >
                       <div className="relative">
-                        <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold overflow-hidden">
+                        <div className="h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold overflow-hidden">
                           {u.avatar_url ? (
                             <img src={u.avatar_url} alt={u.name} className="h-full w-full object-cover" />
                           ) : (
@@ -439,7 +439,7 @@ export default function Chat() {
                       onClick={() => setSelectedUser(u)}
                       className={cn(
                         "p-3 rounded-lg cursor-pointer flex items-center space-x-3 transition-colors opacity-75 hover:opacity-100",
-                        selectedUser?.id === u.id ? "bg-blue-100 dark:bg-blue-900/40 opacity-100" : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                        selectedUser?.id === u.id ? "bg-purple-100 dark:bg-purple-900/40 opacity-100" : "hover:bg-gray-100 dark:hover:bg-gray-800"
                       )}
                     >
                       <div className="relative">
@@ -538,7 +538,7 @@ export default function Chat() {
                                 <button
                                     onClick={() => handleSendFriendRequest(u.id)}
                                     disabled={loading}
-                                    className="p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+                                    className="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                                     title="Add Friend"
                                 >
                                     <UserPlusIcon className="w-5 h-5" />
@@ -572,7 +572,7 @@ export default function Chat() {
                   {selectedUser.avatar_url ? (
                       <img className="h-full w-full object-cover" src={selectedUser.avatar_url} alt="" />
                   ) : (
-                      <div className="h-full w-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold">
+                      <div className="h-full w-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-purple-600 dark:text-purple-300 font-bold">
                           {selectedUser.name.charAt(0).toUpperCase()}
                       </div>
                   )}
@@ -616,14 +616,14 @@ export default function Chat() {
                         className={cn(
                           "max-w-[70%] rounded-2xl px-4 py-2 shadow-sm relative",
                           isMe
-                            ? "bg-blue-600 text-white rounded-br-none"
+                            ? "bg-purple-600 text-white rounded-br-none"
                             : "bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-none border border-gray-100 dark:border-gray-600"
                         )}
                       >
                         <p className="text-sm leading-relaxed">{msg.content}</p>
                         <p className={cn(
                             "text-[10px] mt-1 text-right opacity-70",
-                            isMe ? "text-blue-100" : "text-gray-400 dark:text-gray-300"
+                            isMe ? "text-purple-100" : "text-gray-400 dark:text-gray-300"
                         )}>
                           {format(new Date(msg.created_at), 'HH:mm')}
                         </p>
@@ -637,7 +637,7 @@ export default function Chat() {
 
             {/* Input Area */}
             <form onSubmit={sendMessage} className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex space-x-2 items-center bg-gray-50 dark:bg-gray-700 rounded-full px-2 py-1 border border-gray-200 dark:border-gray-600 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+              <div className="flex space-x-2 items-center bg-gray-50 dark:bg-gray-700 rounded-full px-2 py-1 border border-gray-200 dark:border-gray-600 focus-within:ring-2 focus-within:ring-purple-500 focus-within:border-transparent transition-all">
                 <input
                   type="text"
                   value={newMessage}
@@ -648,7 +648,7 @@ export default function Chat() {
                 <button
                   type="submit"
                   disabled={!newMessage.trim()}
-                  className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  className="p-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                 >
                   <PaperAirplaneIcon className="h-5 w-5" />
                 </button>

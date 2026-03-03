@@ -124,7 +124,7 @@ export default function Tasks() {
 
   const columns = [
     { id: 'todo', title: 'To Do', color: 'bg-gray-100' },
-    { id: 'in_progress', title: 'In Progress', color: 'bg-blue-50' },
+    { id: 'in_progress', title: 'In Progress', color: 'bg-purple-50' },
     { id: 'done', title: 'Done', color: 'bg-green-50' },
   ];
 
@@ -134,7 +134,7 @@ export default function Tasks() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Task Board</h1>
         <button
           onClick={() => openModal()}
-          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 transition-colors"
+          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md hover:bg-purple-500 transition-colors"
         >
           <PlusIcon className="w-5 h-5 mr-2" />
           New Task
@@ -158,7 +158,7 @@ export default function Tasks() {
                     <div className="flex justify-between items-start">
                       <h3 className="font-medium text-gray-900 dark:text-white">{task.title}</h3>
                       <div className="flex space-x-1">
-                        <button onClick={() => openModal(task)} className="p-1 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <button onClick={() => openModal(task)} className="p-1 text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                           <PencilIcon className="w-4 h-4" />
                         </button>
                         <button onClick={() => deleteTask(task.id)} className="p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors">
@@ -181,7 +181,7 @@ export default function Tasks() {
                         {col.id !== 'done' && (
                             <button 
                                 onClick={() => updateStatus(task, col.id === 'todo' ? 'in_progress' : 'done')}
-                                className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+                                className="text-xs text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 font-medium transition-colors"
                             >
                                 Move Next &rarr;
                             </button>
@@ -237,7 +237,7 @@ export default function Tasks() {
                       <input
                         type="text"
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                        className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       />
@@ -245,7 +245,7 @@ export default function Tasks() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                       <textarea
-                        className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                        className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         rows={3}
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -255,7 +255,7 @@ export default function Tasks() {
                         <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Priority</label>
                             <select
-                                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                 value={formData.priority}
                                 onChange={(e) => setFormData({ ...formData, priority: e.target.value as Task['priority'] })}
                             >
@@ -267,7 +267,7 @@ export default function Tasks() {
                         <div>
                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
                             <select
-                                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                 value={formData.status}
                                 onChange={(e) => setFormData({ ...formData, status: e.target.value as Task['status'] })}
                             >
@@ -281,7 +281,7 @@ export default function Tasks() {
                     <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Assignee</label>
                         <select
-                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm border p-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             value={formData.assignee_id}
                             onChange={(e) => setFormData({ ...formData, assignee_id: e.target.value })}
                         >
@@ -302,7 +302,7 @@ export default function Tasks() {
                       </button>
                       <button
                         type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 transition-colors"
                       >
                         {editingTask ? 'Save Changes' : 'Create Task'}
                       </button>

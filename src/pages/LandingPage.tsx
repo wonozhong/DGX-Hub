@@ -17,13 +17,14 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex-shrink-0 flex items-center">
-              <img src="/images/mandala-logo.png" alt="Mandala Logo" className="h-12 w-auto object-contain" />
+              <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-12 w-auto object-contain" />
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
                 <a href="#about" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
                 <a href="#features" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
                 <a href="#gallery" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Gallery</a>
+                <Link to="/public-forum" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Forum</Link>
                 <a href="#contact" className="hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
                 <Link to={user ? "/dashboard" : "/login"} className="bg-yellow-600 text-black hover:bg-yellow-500 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105">
                   {user ? "Dashboard" : "Enter Realm"}

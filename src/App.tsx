@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
+import PublicForum from './pages/PublicForum';
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
   const { user, loading, checkUser } = useAuthStore();
@@ -40,6 +41,7 @@ function App() {
       <SpeedInsights />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/public-forum" element={<PublicForum />} />
         <Route path="/login" element={<Login />} />
         
         <Route element={

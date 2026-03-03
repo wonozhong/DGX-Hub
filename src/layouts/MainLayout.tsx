@@ -106,14 +106,14 @@ export default function MainLayout() {
                                   to={item.href}
                                   className={cn(
                                     location.pathname === item.href
-                                      ? 'bg-gray-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400'
-                                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400',
+                                      ? 'bg-gray-50 text-purple-600 dark:bg-gray-800 dark:text-purple-400'
+                                      : 'text-gray-700 hover:text-purple-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-purple-400',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                 >
                                   <item.icon
                                     className={cn(
-                                      location.pathname === item.href ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400',
+                                      location.pathname === item.href ? 'text-purple-600 dark:text-purple-400' : 'text-gray-400 group-hover:text-purple-600 dark:text-gray-400 dark:group-hover:text-purple-400',
                                       'h-6 w-6 shrink-0'
                                     )}
                                     aria-hidden="true"
@@ -127,10 +127,10 @@ export default function MainLayout() {
                         <li className="mt-auto">
                           <Link
                             to="/"
-                            className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400 mb-2"
+                            className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-purple-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-purple-400 mb-2"
                           >
                             <GlobeAltIcon
-                              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400"
+                              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-purple-600 dark:text-gray-400 dark:group-hover:text-purple-400"
                               aria-hidden="true"
                             />
                             Back to Home
@@ -142,7 +142,7 @@ export default function MainLayout() {
                             {user?.avatar_url ? (
                                 <img className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 object-cover" src={user.avatar_url} alt="" />
                             ) : (
-                                <div className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-gray-200 dark:border-gray-700">
+                                <div className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold border border-gray-200 dark:border-gray-700">
                                     {user?.name?.charAt(0) || 'U'}
                                 </div>
                             )}
@@ -186,14 +186,14 @@ export default function MainLayout() {
                           to={item.href}
                           className={cn(
                             location.pathname === item.href
-                              ? 'bg-gray-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400'
-                              : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400',
+                              ? 'bg-gray-50 text-purple-600 dark:bg-gray-800 dark:text-purple-400'
+                              : 'text-gray-700 hover:text-purple-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-purple-400',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <item.icon
                             className={cn(
-                              location.pathname === item.href ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400',
+                              location.pathname === item.href ? 'text-purple-600 dark:text-purple-400' : 'text-gray-400 group-hover:text-purple-600 dark:text-gray-400 dark:group-hover:text-purple-400',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
@@ -208,14 +208,14 @@ export default function MainLayout() {
                           to={adminNavigation.href}
                           className={cn(
                             location.pathname === adminNavigation.href
-                              ? 'bg-gray-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400'
-                              : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400',
+                              ? 'bg-gray-50 text-purple-600 dark:bg-gray-800 dark:text-purple-400'
+                              : 'text-gray-700 hover:text-purple-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-purple-400',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <adminNavigation.icon
                             className={cn(
-                              location.pathname === adminNavigation.href ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400',
+                              location.pathname === adminNavigation.href ? 'text-purple-600 dark:text-purple-400' : 'text-gray-400 group-hover:text-purple-600 dark:text-gray-400 dark:group-hover:text-purple-400',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
@@ -229,10 +229,10 @@ export default function MainLayout() {
                 <li className="mt-auto">
                     <Link
                         to="/"
-                        className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-blue-400 mb-2"
+                        className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-purple-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-purple-400 mb-2"
                     >
                         <GlobeAltIcon
-                            className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400"
+                            className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-purple-600 dark:text-gray-400 dark:group-hover:text-purple-400"
                             aria-hidden="true"
                         />
                         Back to Home
@@ -244,7 +244,7 @@ export default function MainLayout() {
                         {user?.avatar_url ? (
                             <img className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 object-cover" src={user.avatar_url} alt="" />
                         ) : (
-                            <div className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold border border-gray-200 dark:border-gray-700">
+                            <div className="h-8 w-8 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold border border-gray-200 dark:border-gray-700">
                                 {user?.name?.charAt(0) || 'U'}
                             </div>
                         )}
