@@ -60,7 +60,6 @@ export default function Chat() {
     presenceChannel
       .on('presence', { event: 'sync' }, () => {
         const state = presenceChannel.presenceState();
-        // The keys are user IDs
         const ids = new Set(Object.keys(state));
         setOnlineUserIds(ids);
       })
@@ -83,8 +82,12 @@ export default function Chat() {
         }
       });
 
+    // Refresh friends list every minute to get updated last_seen
+    const friendInterval = setInterval(fetchFriends, 60000);
+
     return () => {
       supabase.removeChannel(presenceChannel);
+      clearInterval(friendInterval);
     };
   }, [user]);
 
@@ -330,9 +333,19 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const isUserOnline = (u: User) => {
+    if (onlineUserIds.has(u.id)) return true;
+    if (u.last_seen) {
+        const lastSeen = new Date(u.last_seen).getTime();
+        const diff = new Date().getTime() - lastSeen;
+        return diff < 2 * 60 * 1000; // 2 minutes threshold
+    }
+    return false;
+  };
+
   // Group Friends by Status
-  const onlineFriends = friends.filter(f => onlineUserIds.has(f.id));
-  const offlineFriends = friends.filter(f => !onlineUserIds.has(f.id));
+  const onlineFriends = friends.filter(f => isUserOnline(f));
+  const offlineFriends = friends.filter(f => !isUserOnline(f));
 
   return (
     <div className="flex h-[calc(100vh-8rem)] bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden border border-gray-200 dark:border-gray-700">
@@ -413,11 +426,13 @@ export default function Chat() {
                             u.name.charAt(0).toUpperCase()
                           )}
                         </div>
-                        <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-gray-900" />
+                        <span className={cn("absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-gray-900", isUserOnline(u) ? "bg-green-400" : "bg-gray-400")} />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900 dark:text-white">{u.name}</p>
-                        <p className="text-xs text-green-600 dark:text-green-400">Online</p>
+                        <p className={cn("text-xs", isUserOnline(u) ? "text-green-600 dark:text-green-400" : "text-gray-500 dark:text-gray-400")}>
+                          {isUserOnline(u) ? 'Online' : 'Offline'}
+                        </p>
                       </div>
                     </li>
                   ))}
@@ -585,9 +600,9 @@ export default function Chat() {
                     {selectedUser.name}
                   </h3>
                   <div className="flex items-center space-x-1">
-                    <span className={cn("h-2 w-2 rounded-full", onlineUserIds.has(selectedUser.id) ? "bg-green-500" : "bg-gray-300")} />
+                    <span className={cn("h-2 w-2 rounded-full", isUserOnline(selectedUser) ? "bg-green-500" : "bg-gray-300")} />
                     <span className="text-xs text-gray-500 dark:text-gray-400">
-                      {onlineUserIds.has(selectedUser.id) ? 'Online' : 'Offline'}
+                      {isUserOnline(selectedUser) ? 'Online' : 'Offline'}
                     </span>
                   </div>
                 </div>

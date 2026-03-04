@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -17,6 +17,7 @@ import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { cn } from '../lib/utils';
 import { useTheme } from '../hooks/useTheme';
+import { supabase } from '../lib/supabase';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -33,6 +34,21 @@ export default function MainLayout() {
   const navigate = useNavigate();
   const { signOut, user } = useAuthStore();
   const { isDark, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    if (!user) return;
+
+    // Update last_seen immediately
+    const updatePresence = async () => {
+      await supabase.from('users').update({ last_seen: new Date().toISOString() }).eq('id', user.id);
+    };
+    updatePresence();
+
+    // Update every minute
+    const interval = setInterval(updatePresence, 60000);
+
+    return () => clearInterval(interval);
+  }, [user]);
 
   const filteredNavigation = user?.role === 'user' 
     ? navigation.filter(item => ['Dashboard', 'Forum'].includes(item.name))
