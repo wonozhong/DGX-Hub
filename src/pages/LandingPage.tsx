@@ -43,12 +43,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <div className="flex justify-center items-center gap-2 mb-6 animate-fade-in-up opacity-80">
-            <span className="text-gray-400 tracking-widest text-xs uppercase">Powered by</span>
-            <img src="/images/dgx-logo-white.svg" alt="DGX Logo" className="h-5" />
-          </div>
-
-          <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-8 animate-pulse">
+          <h2 className="text-yellow-500 text-lg md:text-xl tracking-[0.5em] uppercase mb-8 animate-pulse mt-16">
             Indie AAA • RPG • Global
           </h2>
           
