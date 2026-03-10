@@ -155,8 +155,8 @@ export default function LandingPage() {
 
             <div className="mt-16 pt-8 border-t border-gray-800">
                <p className="text-gray-500">Or email us directly at:</p>
-               <a href="mailto:contact@dragonixinteractive.com" className="text-yellow-500 hover:text-yellow-400 font-medium text-lg mt-2 inline-block">
-                 contact@dragonixinteractive.com
+               <a href="mailto:admin@dragonixinteractive.com" className="text-yellow-500 hover:text-yellow-400 font-medium text-lg mt-2 inline-block">
+                 admin@dragonixinteractive.com
                </a>
             </div>
         </div>
